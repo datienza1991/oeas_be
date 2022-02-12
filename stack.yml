@@ -1,0 +1,39 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+
+  db:
+    image: mysql
+    container_name: oeas_database
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+    - MYSQL_DATABASE=oeas_db
+    - MYSQL_ROOT_PASSWORD=oeas_root_password
+    - MYSQL_USER=oeas_user
+    - MYSQL_PASSWORD=oeas_password
+    ports:
+    - 33066:3306
+    volumes:
+    - dbdata:/var/lib/mysql
+
+  webserver:
+        container_name: oeas_webserver
+        build:
+            context: ./
+        environment:
+        #- PHP_CRUD_API_DRIVER=mysql
+        - PHP_CRUD_API_ADDRESS=oeas_database
+        #- PHP_CRUD_API_PORT=3306
+        - PHP_CRUD_API_DATABASE=oeas_db
+        - PHP_CRUD_API_USERNAME=oeas_user
+        - PHP_CRUD_API_PASSWORD=oeas_password
+        - PHP_CRUD_API_DEBUG=1
+        ports:
+        - "8080:80"
+        depends_on:
+        - db
+
+volumes:
+  dbdata:
