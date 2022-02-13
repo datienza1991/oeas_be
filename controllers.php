@@ -35,7 +35,10 @@ class UploadController {
 
     public function getHello(ServerRequestInterface $request): ResponseInterface
     {
-        $body = $request->getParsedBody();
-        return $this->responder->success(['message' => $body->test]);
+        $target_dir = "uploads/";
+        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+        $body = $request->getUploadedFiles()["fileToUpload"];
+        $body->moveTo($_SERVER['DOCUMENT_ROOT']."/".$target_file);
+        return $this->responder->success(['message' => $body->getClientFilename()]);
     }
 }
