@@ -12020,7 +12020,7 @@ namespace Tqdev\PhpCrudApi {
 
 // file: src/index.php
 namespace Tqdev\PhpCrudApi {
-
+    include_once 'controllers.php';
     use Tqdev\PhpCrudApi\Api;
     use Tqdev\PhpCrudApi\Config;
     use Tqdev\PhpCrudApi\RequestFactory;
@@ -12033,11 +12033,12 @@ namespace Tqdev\PhpCrudApi {
         'username' => 'php-crud-api',
         'password' => 'php-crud-api',
         'database' => 'php-crud-api',
+        'customControllers' => 'MyHelloController,UploadController',
         // 'debug' => false
         'middlewares' => 'dbAuth',
-        'dbAuth.mode' => 'required',
+        'dbAuth.mode' => 'optional',
         'dbAuth.registerUser' => '1',
-        "dbAuth.passwordLength" => '6'
+        'dbAuth.passwordLength' => '6'
     ]);
     $request = RequestFactory::fromGlobals();
     $api = new Api($config);
