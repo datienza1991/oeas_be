@@ -12035,7 +12035,7 @@ namespace Tqdev\PhpCrudApi {
         'database' => 'php-crud-api',
         'customControllers' => 'MyHelloController,UploadController',
         // 'debug' => false
-        'middlewares' => 'dbAuth',
+        'middlewares' => 'cors,dbAuth',
         'dbAuth.mode' => 'optional',
         'dbAuth.registerUser' => '1',
         'dbAuth.passwordLength' => '6'

@@ -29,16 +29,17 @@ class UploadController {
 
     public function __construct(Router $router, Responder $responder, GenericDB $db, ReflectionService $reflection, Cache $cache)
     {
-        $router->register('POST', '/file-upload', array($this, 'getHello'));
+        $router->register('POST', '/file-upload', array($this, 'postUpload'));
         $this->responder = $responder;
     }
 
-    public function getHello(ServerRequestInterface $request): ResponseInterface
+    public function postUpload(ServerRequestInterface $request): ResponseInterface
     {
         $target_dir = "uploads/";
-        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-        $body = $request->getUploadedFiles()["fileToUpload"];
-        $body->moveTo($_SERVER['DOCUMENT_ROOT']."/".$target_file);
-        return $this->responder->success(['message' => $body->getClientFilename()]);
+        $file = $request->getUploadedFiles()["file"];
+        $target_file = $target_dir . $file->getClientFileName();
+        $file->moveTo($target_file);
+         
+        return $this->responder->success(['message' => $file->getClientFilename()]);
     }
 }
