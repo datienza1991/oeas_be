@@ -12035,10 +12035,18 @@ namespace Tqdev\PhpCrudApi {
         'database' => 'php-crud-api',
         'customControllers' => 'MyHelloController,UploadController',
         // 'debug' => false
-        'middlewares' => 'cors,dbAuth',
-        'dbAuth.mode' => 'optional',
+        'middlewares' => 'cors,dbAuth,validation,sanitation',
+        'dbAuth.mode' => 'required',
         'dbAuth.registerUser' => '1',
-        'dbAuth.passwordLength' => '6'
+        'dbAuth.passwordLength' => '6',
+        'validation.handler' => function ($operation, $tableName, $column, $value, $context) {
+            return ($column['name'] == 'password' && strlen($value) < 6) ? 'must be more than 6 characters' : true;
+        },
+        'sanitation.handler' => function ($operation, $tableName, $column, $value) {
+            if($tableName == 'users' && $column['name'] == 'password')
+                return(password_hash($value,PASSWORD_DEFAULT));
+            return is_string($value) ? strip_tags($value) : $value;
+        },
     ]);
     $request = RequestFactory::fromGlobals();
     $api = new Api($config);
