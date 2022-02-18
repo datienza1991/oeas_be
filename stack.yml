@@ -31,7 +31,7 @@ services:
         - PHP_CRUD_API_PASSWORD=oeas_password
         - PHP_CRUD_API_DEBUG=1
         ports:
-        - "8080:80"
+        - "8081:80"
         depends_on:
         - db
 
