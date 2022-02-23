@@ -12035,7 +12035,7 @@ namespace Tqdev\PhpCrudApi {
         'database' => 'php-crud-api',
         'customControllers' => 'MyHelloController,UploadController',
         // 'debug' => false
-        'middlewares' => 'cors,dbAuth,validation,sanitation',
+        'middlewares' => 'cors,dbAuth,validation,sanitation,joinLimits',
         'dbAuth.mode' => 'required',
         'dbAuth.registerUser' => '1',
         'dbAuth.passwordLength' => '6',
@@ -12047,6 +12047,7 @@ namespace Tqdev\PhpCrudApi {
                 return(password_hash($value,PASSWORD_DEFAULT));
             return is_string($value) ? strip_tags($value) : $value;
         },
+        'joinLimits.depth' => 3
     ]);
     $request = RequestFactory::fromGlobals();
     $api = new Api($config);
