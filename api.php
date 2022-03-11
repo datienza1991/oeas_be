@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PHP-CRUD-API v2              License: MIT
  * Maurits van der Schee: maurits@vdschee.nl
@@ -11297,7 +11298,6 @@ namespace Tqdev\PhpCrudApi\Record {
 
 // file: src/Tqdev/PhpCrudApi/Api.php
 namespace Tqdev\PhpCrudApi {
-
     use Psr\Http\Message\ResponseInterface;
     use Psr\Http\Message\ServerRequestInterface;
     use Psr\Http\Server\RequestHandlerInterface;
@@ -12021,6 +12021,7 @@ namespace Tqdev\PhpCrudApi {
 // file: src/index.php
 namespace Tqdev\PhpCrudApi {
     include_once 'controllers.php';
+    
     use Tqdev\PhpCrudApi\Api;
     use Tqdev\PhpCrudApi\Config;
     use Tqdev\PhpCrudApi\RequestFactory;
@@ -12035,8 +12036,8 @@ namespace Tqdev\PhpCrudApi {
         'database' => 'php-crud-api',
         'customControllers' => 'MyHelloController,UploadController',
         // 'debug' => false
-        'middlewares' => 'cors,dbAuth,validation,sanitation,joinLimits',
-        'dbAuth.mode' => 'required',
+        'middlewares' => 'cors,dbAuth,authorization,validation,sanitation,joinLimits',
+        'dbAuth.mode' => 'optional',
         'dbAuth.registerUser' => '1',
         'dbAuth.passwordLength' => '6',
         'validation.handler' => function ($operation, $tableName, $column, $value, $context) {
