@@ -12046,6 +12046,15 @@ namespace Tqdev\PhpCrudApi {
         'sanitation.handler' => function ($operation, $tableName, $column, $value) {
             if($tableName == 'users' && $column['name'] == 'password')
                 return(password_hash($value,PASSWORD_DEFAULT));
+            if($tableName == 'exams' && $column['name'] == 'instructions')
+                return($value);
+            if($tableName == 'questions' && $column['name'] == 'question')
+                return($value);
+            if($tableName == 'questions' && $column['name'] == 'correctAnswer')
+                return($value);
+            if($tableName == 'examAnswers' && $column['name'] == 'answer')
+                return($value);
+
             return is_string($value) ? strip_tags($value) : $value;
         },
         'joinLimits.depth' => 3
